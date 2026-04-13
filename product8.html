@@ -379,9 +379,137 @@ body {
 .back-btn:active {
   transform: scale(0.95);
 }
+
+/* 📱 MOBILE ADAPT */
+@media (max-width: 768px) {
+
+  .product {
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    gap: 30px;
+  }
+
+  /* картинка */
+  .product-image {
+    width: 100%;
+    max-width: 420px;
+  }
+
+
+  .product-image img {
+    width: 100%;
+    height: auto;
+    border-radius: 14px;
+  }
+
+  /* стрелки на картинке */
+  .arrow {
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+  }
+
+  /* блок инфы */
+  .product-info {
+    width: 100%;
+    max-width: 100%;
+    text-align: center;
+  }
+  
+.product-inner {
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+}
+
+  .product-title {
+    font-size: 22px;
+  }
+
+  .product-price {
+    font-size: 18px;
+    margin: 10px 0 15px;
+  }
+
+  .product-desc {
+    font-size: 14px;
+    line-height: 1.5;
+    opacity: 0.8;
+  }
+
+  /* кнопка купить */
+  .buy-btn {
+    width: 100%;
+    padding: 14px;
+    font-size: 14px;
+  }
+
+  /* мини картинки */
+  .thumbs {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
+  }
+
+  .thumbs img {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 8px;
+  }
+
+  /* кнопка назад */
+  .back-btn {
+    left: 15px;
+    top: 70px;
+    font-size: 13px;
+    padding: 8px 12px;
+  }
+
+  /* fullscreen картинка */
+  .fullscreen img {
+    max-width: 95%;
+    max-height: 80%;
+  }
+
+  .main-img {
+  height: auto;
+  max-height: 420px;
+  object-fit: cover;
+}
+
+.arrow {
+  opacity: 1;
+}
+
+.product-info {
+  text-align: left;
+  padding: 0 10px;
+}
+
+.contacts-grid {
+  grid-template-columns: 1fr 1fr;
+}
+
+.contacts {
+  padding: 60px 20px;
+}
+
+
+}
+
+body {
+  -webkit-tap-highlight-color: transparent;
+}
 </style>
 </head>
-
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PISTON - PRODUCT</title>
+  
 <body>
 
 <div class="sidebar" id="menu">
