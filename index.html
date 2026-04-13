@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>PISTON</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Montserrat', Arial, sans-serif;
+}
+
+/* HEADER */
+.brand {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 60px;
+
+  background: rgba(255,255,255,0.7);
+  backdrop-filter: blur(10px);
+
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+
+.brand::after {
+  pointer-events: none;
+}
+
+
+.brand-title {
+  font-weight: 800;
+  letter-spacing: 3px;
+}
+
+.burger {
+  position: absolute;
+  left: 20px;
+  cursor: pointer;
+  z-index: 200;
+}
+
+.burger div {
+  width: 25px;
+  height: 3px;
+  background: black;
+  margin: 5px 0;
+  transition: 0.3s;
+}
+
+.burger:hover div {
+  transform: translateX(7px);
+}
+
+
+/* SIDEBAR */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: -260px;
+  width: 260px;
+  height: 100%;
+  background: black;
+  color: white;
+  padding: 40px 20px;
+  transition: 0.3s;
+  z-index: 200;
+}
+
+.sidebar.active {
+  left: 0;
+}
+
+.sidebar a {
+  display: block;
+  margin: 20px 0;
+  color: white;
+  text-decoration: none;
+  opacity: 0.7;
+}
+
+.sidebar a:hover {
+  opacity: 1;
+}
+
+.close-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  cursor: pointer;
+  font-size: 22px;
+}
+
+/* HERO */
+.hero {
+  height: 100vh;
+  margin-top: 60px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+
+  background: url("images/hat3.jpg") center/cover no-repeat;
+  position: relative;
+  color: white;
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, transparent 40%, black 100%);
+}
+
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+}
+
+.hero h1 {
+  font-size: 64px;
+  margin: 0;
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeUp 1s forwards;
+  letter-spacing: 4px;
+  transition: 0.3s;
+}
+
+.hero h1:hover {
+  letter-spacing: 8px;
+  transform: scale(1.03);
+}
+
+.hero p {
+  font-size: 18px;
+  margin-top: 15px;
+  opacity: 0.7;
+  transform: translateY(30px);
+  animation: fadeUp 1s 0.3s forwards;
+}
+
+.hero-btn {
+  margin-top: 30px;
+  padding: 12px 28px;
+
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.5);
+  color: white;
+
+  font-size: 14px;
+  letter-spacing: 2px;
+
+  cursor: pointer;
+  border-radius: 8px;
+
+  backdrop-filter: blur(5px);
+  transition: 0.3s;
+}
+
+.hero-btn:hover {
+  background: white;
+  color: black;
+  transform: translateY(-2px);
+}
+
+.hero-btn:active {
+  transform: scale(0.97);
+}
+
+
+@keyframes fadeUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* SECTION */
+.section {
+  padding: 120px 20px 80px;
+}
+
+.catalog-title {
+  text-align: center;
+  font-size: 28px;
+  margin-bottom: 30px;
+  margin-top: -40px;
+  letter-spacing: 2px;
+}
+
+
+.catalog-title::after {
+  content: "";
+  display: block;
+  width: 60px;
+  height: 2px;
+  background: black;
+  margin: 10px auto 0;
+}
+
+/* GRID */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 30px;
+}
+
+/* CARD */
+.card {
+  opacity: 0;
+  transform: translateY(50px);
+  transition: 
+    opacity 0.4s ease,
+    transform 0.4s ease;
+}
+
+
+.card.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.card:hover {
+  transform: translateY(-6px);
+}
+
+.card img {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 14px;
+  transition: 0.3s;
+}
+
+.card:hover img {
+  transform: scale(1.05);
+}
+
+.card-content {
+  margin-top: 10px;
+}
+
+.card-link {
+  display: block;
+}
+
+.title {
+  font-weight: 600;
+}
+
+.price {
+  opacity: 0.6;
+  margin-top: 5px;
+}
+
+button {
+  margin-top: 12px;
+  padding: 12px;
+
+  width: 100%;
+
+  background: rgba(0,0,0,0.04);
+  color: black;
+
+  border: 1px solid rgba(0,0,0,0.15);
+  border-radius: 12px;
+
+  font-family: 'Montserrat', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+
+  cursor: pointer;
+
+  backdrop-filter: blur(6px);
+
+  transition: 
+    background 0.3s ease,
+    color 0.3s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+button:hover {
+  background: black;
+  color: white;
+
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+button:active {
+  transform: scale(0.96);
+  box-shadow: none;
+}
+
+button span {
+  position: relative;
+  z-index: 1;
+}
+
+/* ABOUT */
+.about {
+  display: flex;
+  flex-direction: row; /* ВАЖНО */
+  align-items: stretch;
+  min-height: 80vh;
+  opacity: 0;
+  transform: translateY(60px);
+  transition: 0.8s;
+}
+
+.about.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.about-text {
+  width: 45%;
+  background: black;
+  color: white;
+  padding: 60px;
+  border-radius: 0 20px 20px 0;
+  flex: 0 0 45%;
+}
+
+.about-text ul {
+  padding-left: 20px;
+}
+
+.about-text li {
+  margin-bottom: 15px;
+}
+
+.about-image {
+  flex: 0 0 55%;
+  background: url("images/онас.jpg") center/cover no-repeat;
+  border-radius: 20px 0 0 20px;
+  min-height: 400px;
+}
+
+
+/* CONTACTS */
+.contacts {
+  background: black;
+  color: white;
+  padding: 80px 40px;
+  margin-top: 100px;
+}
+
+.contacts-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 40px;
+}
+
+.contacts h3 {
+  font-size: 34px;
+  cursor: pointer;
+}
+
+.contacts a {
+  display: block;
+  color: white;
+  opacity: 0.7;
+  text-decoration: none;
+  margin-bottom: 10px;
+}
+
+.contacts a:hover { opacity: 1; }
+
+/* FOOTER */
+.footer {
+  text-align: center;
+  padding: 20px;
+  opacity: 0.5;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+.grid {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.grid {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+@media (max-width: 1200px) {
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 900px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 500px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 500px) {
+  .card img {
+    height: 220px;
+  }
+}
+
+@media (max-width: 600px) {
+  .hero h1 {
+    font-size: 34px;
+    letter-spacing: 2px;
+  }
+
+  .hero p {
+    font-size: 14px;
+  }
+
+  .hero-btn {
+    font-size: 12px;
+    padding: 10px 20px;
+  }
+}
+
+@media (max-width: 900px) {
+  .about {
+    flex-direction: column;
+  }
+
+  .about-text {
+    width: 100%;
+    border-radius: 20px 20px 0 0;
+  }
+
+  .about-image {
+    width: 100%;
+    height: 300px;
+    border-radius: 0 0 20px 20px;
+  }
+}
+
+@media (max-width: 900px) {
+  .contacts-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 500px) {
+  .contacts-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .sidebar {
+    width: 100%;
+  }
+}
+
+@media (max-width: 900px) {
+  .product {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .product-image {
+    width: 90%;
+  }
+
+  .product-info {
+    width: 100%;
+  }
+}
+
+@media (max-width: 600px) {
+  .back-btn {
+    top: 70px;
+    left: 15px;
+    font-size: 12px;
+    padding: 8px 12px;
+  }
+}
+
+
+</style>
+</head>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<body>
+<body id="top"></body>
+
+<div class="sidebar" id="menu">
+  <div class="close-btn" onclick="toggleMenu()">✕</div>
+  <a href="index.html#top">Главная</a>
+  <a href="index.html#catalog">Каталог</a>
+  <a href="index.html#about">О нас</a>
+  <a href="index.html#contacts">Контакты</a>
+</div>
+
+<div class="brand">
+  <div class="burger" onclick="toggleMenu()">
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+  <div class="brand-title" onclick="scrollToTop()">PISTON</div>
+</div>
+
+<div class="hero">
+  <div class="hero-content">
+    <h1>PISTON STORE</h1>
+    <p>кастомные изделия из автодеталей</p>
+   <button class="hero-btn" onclick="scrollToSection('catalog')">
+  СМОТРЕТЬ КАТАЛОГ
+</button>
+
+
+  </div>
+</div>
+
+<div class="section" id="catalog">
+  <h2 class="catalog-title">КАТАЛОГ</h2>
+
+  <div class="grid">
+
+    <!-- 8 карточек -->
+<div class="card">
+  <a href="product1.html" class="card-link">
+    <img src="images/honda1.jpg">
+  </a>
+
+  <div class="card-content">
+    <div class="title">Вешалка из клапанной крышки HONDA</div>
+    <div class="price">4990₽</div>
+    <button onclick="goToProduct('product1.html')">
+  <span>КУПИТЬ</span>
+</button>
+  </div>
+</div>
+
+<div class="card">
+  <a href="product2.html" class="card-link">
+    <img src="images/bmw1.jpg">
+  </a>
+
+  <div class="card-content">
+    <div class="title">Вешалка из клапанной крышки BMW</div>
+    <div class="price">4990₽</div>
+    <button onclick="goToProduct('product2.html')">
+  <span>КУПИТЬ</span>
+</button>
+  </div>
+</div>
+
+<div class="card">
+  <a href="product3.html" class="card-link">
+    <img src="images/volks1.jpg">
+  </a>
+
+  <div class="card-content">
+    <div class="title">Вешалка из клапанной крышки Volkswagen</div>
+    <div class="price">3990₽</div>
+    <button onclick="goToProduct('product3.html')">КУПИТЬ</button>
+  </div>
+</div>
+
+<div class="card">
+  <a href="product4.html" class="card-link">
+    <img src="images/honda.jpg">
+  </a>
+
+  <div class="card-content">
+    <div class="title">Вешалка из клапанной крышки HONDA</div>
+    <div class="price">4990₽</div>
+    <button onclick="goToProduct('product4.html')">КУПИТЬ</button>
+  </div>
+</div>
+
+<div class="card">
+  <a href="product5.html" class="card-link">
+    <img src="images/bmwatch.jpg">
+  </a>
+
+  <div class="card-content">
+    <div class="title">Часы - cцепление BMW</div>
+    <div class="price">4990₽</div>
+    <button onclick="goToProduct('product5.html')">КУПИТЬ</button>
+  </div>
+</div>
+
+<div class="card">
+  <a href="product6.html" class="card-link">
+    <img src="images/mbenzwatch.jpg">
+  </a>
+
+  <div class="card-content">
+    <div class="title">Часы - cцепление Mercedes Benz</div>
+    <div class="price">4990₽</div>
+    <button onclick="goToProduct('product6.html')">КУПИТЬ</button>
+  </div>
+</div>
+
+<div class="card">
+  <a href="product7.html" class="card-link">
+    <img src="images/pwing1.jpg">
+  </a>
+
+  <div class="card-content">
+    <div class="title">Полка GT3 WING</div>
+    <div class="price">4990₽</div>
+    <button onclick="goToProduct('product7.html')">КУПИТЬ</button>
+  </div>
+</div>
+
+<div class="card">
+  <a href="product8.html" class="card-link">
+    <img src="images/porschewing.jpg">
+  </a>
+
+  <div class="card-content">
+    <div class="title">Полка GT3 WING</div>
+    <div class="price">4990₽</div>
+    <button onclick="goToProduct('product8.html')">КУПИТЬ</button>
+  </div>
+</div>
+
+  </div>
+</div>
+
+<!-- О НАС -->
+<div class="about" id="about">
+  <div class="about-text">
+    <h2>О НАС</h2>
+
+
+<p>Мы занимаемся <b>Art-Recycling</b> — превращаем отработавшие свой срок автомобильные узлы и агрегаты в эксклюзивные предметы интерьера.</p>
+
+<p>То, что другие называют металлоломом, для нас — материал с богатой родословной.</p>
+
+<ul>
+
+  <li><b>Настоящее железо.</b> Мы работаем с деталями легендарных моторов. В каждой грани — память о тысячах пройденных километров и инженерный гений великих автоконцернов.</li>
+  
+  <li><b>Ручная работа.</b> Мы не просто отмываем детали. Мы выводим каждый шов, полируем металл до идеала и дорабатываем конструкцию так, чтобы она стала центром притяжения в любом интерьере.</li>
+  
+  <li><b>История с душой.</b> Наш декор не просто отлит на конвейере. Это настоящий металл, прошедший тысячи километров. Он сохранил в себе энергию дорог и драйв былых побед.</li>
+  
+  <li><b>Автомобильный код.</b> Наши вещи понятны тем, кто привык чувствовать машину. Это декор с запахом бензина, масла и жженного сцепления.</li>
+  
+</ul>
+
+<p>
+<b>Мы создаем артефакты для тех, кто влюблен в автомобильную культуру так же, как и мы.</b>
+</p>
+  </div>
+  <div class="about-image"></div>
+</div>
+
+<!-- КОНТАКТЫ -->
+<div class="contacts" id="contacts">
+  <div class="contacts-grid">
+    <div>
+      <h3 onclick="goHome()">PISTON</h3>
+      <p>for you</p>
+    </div>
+
+    <div>
+      <h4>Каталог</h4>
+      <a href="#">Вешалки / Ключницы</a>
+      <a href="#">Полки</a>
+      <a href="#">Светильники</a>
+    </div>
+
+    <div>
+      <h4>Для покупателей</h4>
+      <a href="#">Доставка и оплата</a>
+      <a href="#">Гарантия</a>
+      <a href="#">Поддержка</a>
+    </div>
+
+    <div>
+      <h4>Контакты</h4>
+      <a href="#">Telegram</a>
+      <a href="#">Instagram</a>
+      <a href="#">TikTok</a>
+      <a href="#">Avito</a>
+    </div>
+
+  </div>
+
+</div>
+
+<div class="footer">
+  PISTON 2026
+</div>
+
+<script>
+function toggleMenu() {
+  document.getElementById("menu").classList.toggle("active");
+}
+
+function scrollToTop() {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function scrollToSection(id) {
+  const el = document.getElementById(id);
+
+  if (el) {
+    const offset = 60;
+    const top = el.offsetTop - offset;
+
+    window.scrollTo({
+      top: top,
+      behavior: "smooth"
+    });
+  }
+
+  // 🔥 закрываем меню
+  document.getElementById("menu").classList.remove("active");
+}
+
+
+function goToProduct(link) {
+  window.location.href = link;
+}
+
+const cards = document.querySelectorAll(".card");
+
+function showCards() {
+  const trigger = window.innerHeight * 0.85;
+
+  cards.forEach(card => {
+    const rect = card.getBoundingClientRect();
+
+    if (rect.top < trigger && rect.bottom > 0) {
+      card.classList.add("show");
+    } else if (rect.top > window.innerHeight) {
+      // элемент снизу — убираем
+      card.classList.remove("show");
+    }
+    // если элемент выше экрана — ничего не делаем
+  });
+}
+
+
+
+window.addEventListener("scroll", showCards);
+showCards();
+
+const about = document.querySelector(".about");
+
+function showAbout() {
+  const rect = about.getBoundingClientRect();
+  const trigger = window.innerHeight * 0.85;
+
+  if (rect.top < trigger && rect.bottom > 0) {
+    about.classList.add("show");
+  } else if (rect.top > window.innerHeight) {
+    about.classList.remove("show");
+  }
+}
+
+
+
+window.addEventListener("scroll", function() {
+  const burger = document.querySelectorAll(".burger div");
+
+  if (window.scrollY > 50) {
+    burger.forEach(line => line.style.background = "black");
+  } else {
+    burger.forEach(line => line.style.background = "black");
+  }
+});
+
+
+
+
+window.addEventListener("scroll", showAbout);
+showAbout();
+
+function goHome() {
+  window.location.href = "index.html";
+}
+
+const menuLinks = document.querySelectorAll(".sidebar a");
+
+menuLinks.forEach(link => {
+  link.addEventListener("click", function () {
+    document.getElementById("menu").classList.remove("active");
+  });
+});
+</script>
+
+</body>
+</html>
