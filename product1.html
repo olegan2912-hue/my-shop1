@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>PISTON - PRODUCT</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
+
+<style>
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: 'Montserrat', Arial;
+}
+
+/* HEADER */
+.brand {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 60px;
+  background: rgba(255,255,255,0.7);
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  background: rgba(255,255,255,0.85);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+}
+
+.brand-title {
+  font-weight: 800;
+  letter-spacing: 3px;
+  cursor: pointer;
+}
+
+.burger {
+  position: absolute;
+  left: 20px;
+  cursor: pointer;
+}
+
+.burger div {
+  width: 25px;
+  height: 3px;
+  background: black;
+  margin: 5px 0;
+}
+
+/* SIDEBAR */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: -260px;
+  width: 260px;
+  height: 100%;
+  background: black;
+  color: white;
+  padding: 40px 20px;
+  transition: 0.3s;
+  z-index: 200;
+}
+
+.sidebar.active { left: 0; }
+
+.sidebar a {
+  display: block;
+  margin: 20px 0;
+  color: white;
+  text-decoration: none;
+  opacity: 0.7;
+  transition: 0.3s;
+}
+
+.sidebar a:hover {
+  opacity: 1;
+}
+
+.close-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  cursor: pointer;
+}
+
+/* PRODUCT */
+.product {
+  margin-top: 120px;
+  padding: 40px;
+  display: flex;
+  gap: 60px;
+  margin-top: 120px;
+  padding: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.product-inner {
+  display: flex;
+  gap: 80px;
+  align-items: flex-start;
+}
+
+/* IMAGE BLOCK */
+.product-image {
+  width: 550px;
+}
+
+.image-wrapper {
+  position: relative;
+}
+
+.main-img {
+  width: 100%;
+  border-radius: 16px;
+  cursor: pointer;
+  transition: 0.3s;
+  height: 550px;
+}
+
+.main-img:hover {
+  transform: scale(1.02);
+}
+
+/* ARROWS */
+.arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 18px;
+  color: white;
+
+  background: rgba(0,0,0,0.25);
+  backdrop-filter: blur(6px);
+
+  cursor: pointer;
+  opacity: 0;
+  transition: 0.3s;
+  z-index: 5; /* 🔥 ВАЖНО */
+}
+
+/* показываем стрелки при наведении на ВСЮ область */
+.image-wrapper:hover .arrow {
+  opacity: 1;
+}
+
+/* всегда держим кликабельными */
+.arrow:hover {
+  opacity: 1;
+  background: rgba(0,0,0,0.5);
+}
+
+.arrow.left { left: 12px; }
+.arrow.right { right: 12px; }
+
+/* стрелки всегда видны в fullscreen */
+.arrow.fs {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 1 !important;
+  background: rgba(0,0,0,0.4);
+}
+
+.arrow.fs.left { left: 40px; }
+.arrow.fs.right { right: 40px; }
+
+/* THUMBS */
+.thumbs {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.thumbs img {
+  width: 70px;
+  height: 70px;
+  object-fit: cover;
+  border-radius: 8px;
+  cursor: pointer;
+  opacity: 0.6;
+  transition: 0.3s;
+}
+
+.thumbs img.active {
+  opacity: 1;
+  border: 2px solid black;
+}
+
+/* INFO */
+.product-info {
+  max-width: 480px;
+}
+
+.product-title {
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.product-price {
+  margin-top: 10px;
+  margin-bottom: 15px;
+
+  font-size: 20px;
+  font-weight: 500;
+  letter-spacing: 1px;
+
+  opacity: 0.7;
+}
+
+.buy-btn {
+  margin-top: 10px;
+  margin-bottom: 25px;
+
+  padding: 14px;
+  width: 100%;
+
+  font-size: 14px;
+  letter-spacing: 2px;
+
+  cursor: pointer;
+
+  background: rgba(255,255,255,0.4);
+  color: black;
+
+  border: 1px solid rgba(0,0,0,0.1);
+  border-radius: 12px;
+
+  backdrop-filter: blur(10px);
+
+  transition: all 0.3s ease;
+}
+
+/* 🔥 плавный переход белый → черный */
+.buy-btn:hover {
+  background: black;
+  color: white;
+  transform: translateY(-2px);
+}
+
+.buy-btn:active {
+  transform: scale(0.97);
+}
+
+/* FULLSCREEN */
+.fullscreen {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.9);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.fullscreen img {
+  width: 70%;
+  max-width: 800px;
+  border-radius: 12px;
+}
+
+.fullscreen.active {
+  display: flex;
+}
+
+/* FULLSCREEN ARROWS */
+.fullscreen .arrow {
+  opacity: 1;
+  position: fixed;
+}
+
+.fullscreen .arrow.left {
+  left: 40px;
+}
+
+.fullscreen .arrow.right {
+  right: 40px;
+}
+
+/* CONTACTS */
+.contacts {
+  background: black;
+  color: white;
+  padding: 80px 40px;
+  margin-top: 100px;
+}
+
+.contacts-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 40px;
+}
+
+.contacts h3 {
+  font-size: 34px;
+  cursor: pointer;
+}
+
+.contacts a {
+  display: block;
+  color: white;
+  opacity: 0.7;
+  text-decoration: none;
+  margin-bottom: 10px;
+}
+
+.contacts a:hover { opacity: 1; }
+
+/* FOOTER */
+.footer {
+  text-align: center;
+  padding: 20px;
+  opacity: 0.5;
+}
+
+.close-full {
+  position: absolute;
+  top: 30px;
+  right: 40px;
+  font-size: 28px;
+  color: white;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: 0.3s;
+}
+
+.close-full:hover {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+.product-desc {
+  font-size: 14px;
+  line-height: 1.6;
+  opacity: 0.75;
+}
+
+.back-btn {
+  position: fixed;
+  top: 80px; /* под шапкой */
+  left: 30px;
+
+  padding: 10px 18px;
+
+  background: rgba(0,0,0,0.05);
+  backdrop-filter: blur(8px);
+
+  border: 1px solid rgba(0,0,0,0.1);
+  border-radius: 10px;
+
+  font-size: 13px;
+  letter-spacing: 1px;
+
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  z-index: 150;
+}
+
+.back-btn:hover {
+  background: black;
+  color: white;
+  transform: translateY(-2px);
+}
+
+.back-btn:active {
+  transform: scale(0.95);
+}
+</style>
+</head>
+
+<body>
+
+<div class="sidebar" id="menu">
+  <div class="close-btn" onclick="toggleMenu()">✕</div>
+  <a href="index.html#top">Главная</a>
+  <a href="index.html#catalog">Каталог</a>
+  <a href="index.html#about">О нас</a>
+  <a href="index.html#contacts">Контакты</a>
+</div>
+
+<div class="back-btn" onclick="goBackToCatalog()">
+  ← НАЗАД
+</div>
+
+<div class="brand">
+  <div class="burger" onclick="toggleMenu()">
+    <div></div><div></div><div></div>
+  </div>
+  <div class="brand-title" onclick="goHome()">PISTON</div>
+</div>
+
+<!-- PRODUCT -->
+<div class="product">
+  <div class="product-inner">
+
+  <div class="product-image">
+
+    <div class="image-wrapper">
+
+      <div class="arrow left" onclick="prev()">‹</div>
+
+      <img id="mainImg" class="main-img" src="images/honda1.jpg" onclick="openFull()">
+
+      <div class="arrow right" onclick="next()">›</div>
+
+    </div>
+
+    <div class="thumbs">
+      <img src="images/honda1.jpg" onclick="setImg(0)" class="active">
+      <!--<img src="images/для всех.jpg" onclick="setImg(1)">
+      <img src="images/Для всех1.jpg" onclick="setImg(2)"> -->
+    </div>
+
+  </div>
+
+  <div class="product-info">
+    <div class="product-title">Вешалка из клапанной крышки HONDA</div>
+
+    <div class="product-price">4990₽</div>
+
+    
+    <button class="buy-btn" onclick="buy()">Оставить заявку (это бесплатно)</button>
+    <div class="product-desc">
+      <p><b>Настенная вешалка из клапанной крышки Honda</b></p>
+      <p>Изделие выполнено на базе оригинальной алюминиевой крышки ГБЦ, прошедшей полный цикл реставрации и кастомизации.</p>
+      <p><b>Характеристики и исполнение:</b></p>
+      <p><li><b>Материалы:</b> Массивный алюминиевый сплав, сталь. Поверхность окрашена в глубокий синий глянец.</li></p>
+      <p><li><b>Детализация:</b> Вся крышка полностью покаршена вручную. Установлены декоративный фильтр картерных газов и маслозаливная крышка.</li></p>
+      <p><li><b>Функционал:</b> В качестве держателей использованы четыре свечи зажигания.</li></p>
+      <p><li><b>Монтаж:</b> Надежное крепление к стене через скрытые технологические отверстия.</li></p>
+
+      <p><b>Отлично впишется в гараж, сервис или комнату, если хочется добавить немного JDM-эстетики в интерьер.</b></p>
+    </div>
+
+  </div>
+
+  </div>
+</div>
+
+<!-- FULLSCREEN -->
+<div class="fullscreen" id="full">
+
+  <div class="close-full" onclick="closeFull()">✕</div>
+
+  <div class="arrow fs left" onclick="prev()">‹</div>
+
+  <img id="fullImg">
+
+  <div class="arrow fs right" onclick="next()">›</div>
+
+</div>
+
+<!-- CONTACTS -->
+<div class="contacts">
+  <div class="contacts-grid">
+    <div>
+      <h3 onclick="goHome()">PISTON</h3>
+      <p>for you</p>
+    </div>
+
+    <div>
+      <h4>Каталог</h4>
+      <a href="#">Вешалки / Ключницы</a>
+      <a href="#">Полки</a>
+      <a href="#">Светильники</a>
+    </div>
+
+    <div>
+      <h4>Для покупателей</h4>
+      <a href="#">Доставка и оплата</a>
+      <a href="#">Гарантия</a>
+      <a href="#">Поддержка</a>
+    </div>
+
+    <div>
+      <h4>Контакты</h4>
+      <a href="#">Telegram</a>
+      <a href="#">Instagram</a>
+      <a href="#">TikTok</a>
+      <a href="#">Avito</a>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  PISTON 2026
+</div>
+
+<script>
+let images = [
+  "images/honda1.jpg",
+  "images/для всех.jpg",
+  "images/Для всех1.jpg"
+];
+
+let index = 0;
+
+function setImg(i) {
+  index = i;
+  render();
+}
+
+function next() {
+  index++;
+  if (index >= images.length) index = 0;
+  render();
+}
+
+function prev() {
+  index--;
+  if (index < 0) index = images.length - 1;
+  render();
+}
+
+function render() {
+  const main = document.getElementById("mainImg");
+  const full = document.getElementById("fullImg");
+
+  if (main) main.src = images[index];
+  if (full) full.src = images[index];
+
+  document.querySelectorAll(".thumbs img").forEach((img, i) => {
+    img.classList.toggle("active", i === index);
+  });
+}
+
+/* FULLSCREEN */
+function openFull() {
+  const full = document.getElementById("full");
+  full.classList.add("active");
+  document.body.style.overflow = "hidden";
+
+  render();
+}
+
+function scrollToSection(id) {
+  const el = document.getElementById(id);
+
+  if (el) {
+    const offset = 60;
+    const top = el.offsetTop - offset;
+
+    window.scrollTo({
+      top: top,
+      behavior: "smooth"
+    });
+  }
+
+  // 🔥 закрываем меню
+  document.getElementById("menu").classList.remove("active");
+}
+
+function closeFull() {
+  const full = document.getElementById("full");
+  full.classList.remove("active");
+  document.body.style.overflow = "";
+}
+
+/* КЛИК ВНЕ */
+document.getElementById("full").addEventListener("click", function(e) {
+  if (e.target.id === "full") {
+    closeFull();
+  }
+});
+
+/* MENU */
+function toggleMenu() {
+  document.getElementById("menu").classList.toggle("active");
+}
+
+function goHome() {
+  window.location.href = "index.html";
+}
+
+function buy() {
+  window.location.href = "https://forms.gle/ТВОЯ_ССЫЛКА";
+}
+const menuLinks = document.querySelectorAll(".sidebar a");
+
+menuLinks.forEach(link => {
+  link.addEventListener("click", function () {
+    document.getElementById("menu").classList.remove("active");
+  });
+});
+
+function goBackToCatalog() {
+  window.location.href = "index.html#catalog";
+}
+
+</script>
+
+</body>
+</html>
